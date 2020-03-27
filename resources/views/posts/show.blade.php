@@ -17,7 +17,7 @@
     User Info
   </div>
     <div class="card-body">
-      <p><b>Name:</b> {{$post->user->name}} </p>
+      <p><b>Name:</b> {{$post->user->name ? $post->user->name : "not exist"}} </p>
       <p><b>e-mail:</b> {{$post->user->email}} </p>
       <p><b>At:</b> {{$post->created_at->format('l jS \\of F Y h:i:s A')}} </p>
     </div>

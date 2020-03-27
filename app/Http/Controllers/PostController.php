@@ -7,23 +7,23 @@ use App\Post;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $postss = DB::table('posts')->paginate(2);
-        $posts = Post::all();
+        // $posts = DB::table('posts')->paginate(2);
+        // $posts = Post::all()->paginate(2);
+        $posts = Post::paginate(2);
         return view('posts.index', [
             'posts' => $posts,
-            'postss'=>$postss
         ]);
     }
 
     public function create()
     {
         $users = User::all();
-
         return view('posts.create', [
             'users' => $users
         ]);
@@ -45,18 +45,28 @@ class PostController extends Controller
             'post' => $post,
         ]);
     }
-    public function store()
+    public function store(StorePostRequest $spr)
     {
         //get the request data
         $request = request();
+        // $validateData = $request->validate([
+        //     'title' => 'required|min:3',
+        //     'description' => 'required|min:5'
+        // ], [
+        //     'title.min' => 'Please the title has minimum of 3 characters',
+        //     'title.required' => 'Please Enter the title field',
+        //     'description.min' => 'Please the title has minimum of 5 characters',
+        //     'description.required' => 'Please Enter the description field'
+        // ]);
 
         //store the request data in the db
-        Post::create([
-            'title' => $request->title,
-            'description' =>  $request->description,
-            'user_id' =>  $request->user_id,
-        ]);
+        // Post::create([
+        //     'title' => $request->title,
+        //     'description' =>  $request->description,
+        //     'user_id' =>  $request->user_id,
+        // ]);
 
+        Post::create($request->only(['title', 'description', 'user_id']));
         //redirect to /posts
         return redirect()->route('posts.index');
     }
