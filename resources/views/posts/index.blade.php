@@ -16,13 +16,12 @@
     </thead>
     <tbody>
       @foreach($posts as $post)
+      @foreach($postss as $posti)
       <tr>
-        <th scope="row">{{ $post->id }}</th>
-        <td>{{ $post->title }}</td>
-        <td>{{ $post->description }}</td>
-        <!-- username need to be handled somehow-->
-        <!-- display id of username for now -->
-        <td>{{ $post->user_id  ?  $post->user_id : 'not exist'}}</td>
+        <th scope="row">{{ $posti->id }}</th>
+        <td>{{ $posti->title }}</td>
+        <td>{{ $posti->description }}</td>
+        <td>{{ $post->user->name  ?  $post->user->name : 'not exist'}}</td>
         <td>{{Carbon\Carbon::parse($post->created_at)->format('Y-m-d') }}</td>
         <td>
           <a href="{{route('posts.show',['post' => $post->id])}}" class="btn btn-primary">Show</a>
@@ -57,7 +56,8 @@
       </div>
 </div>
 @endforeach
+@endforeach
 </tbody>
 </table>
-{{$posts->links()}}
+{{$postss->links()}}
 @endsection
