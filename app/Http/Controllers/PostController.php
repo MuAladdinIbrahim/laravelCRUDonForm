@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
-        return view('/posts.index', [
+        $posts = DB::table('posts')->paginate(2);
+        // $users = User::all();
+        return view('posts.index', [
             'posts' => $posts,
         ]);
     }
@@ -24,7 +27,7 @@ class PostController extends Controller
             'users' => $users
         ]);
     }
-    
+
     public function show()
     {
         //take the id from url param
@@ -37,7 +40,7 @@ class PostController extends Controller
         // $postSecond = Post::where('id', $postId)->first();
 
         //send the value to the view
-        return view('posts.show',[
+        return view('posts.show', [
             'post' => $post,
         ]);
     }
@@ -57,36 +60,38 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function edit(){
+    public function edit()
+    {
         $request = request();
         $postId = $request->post;
         $post = Post::find($postId);
         $user_id = $post->user_id;
         $user = User::find($user_id);
-        return view('posts.edit',[
-            'post'=>$post,
-            'user'=>$user
+        return view('posts.edit', [
+            'post' => $post,
+            'user' => $user
         ]);
     }
 
-    public function update(){
+    public function update()
+    {
         $request = request();
         // dd($request);
         $postId = $request->post;
         $post = Post::find($postId);
-        $post->title= $request->title;
+        $post->title = $request->title;
         $post->description = $request->description;
         $post->user_id =  $request->user_id;
         $post->save();
         return redirect()->route('posts.index');
     }
 
-    public function destroy(){
+    public function destroy()
+    {
         $request = request();
         $postId = $request->post;
         $post = Post::find($postId);
         $post->delete();
         return redirect()->route('posts.index');
     }
-
 }

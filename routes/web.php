@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,8 @@ Route::get('/', function () {
 
 Route::get('/posts','PostController@index')->name('posts.index');
 Route::get('/posts/create', 'PostController@create')->name('posts.create');
-Route::post('/posts', 'PostController@store')->name('posts.store');
-Route::put('/posts/{post}', 'PostController@update')->name('posts.update');
 Route::get('/posts/{post}/edit', 'PostController@edit')->name('post.edit');
 Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
+Route::post('/posts', 'PostController@store')->name('posts.store');
+Route::put('/posts/{post}', 'PostController@update')->name('posts.update');
 Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.destroy');
