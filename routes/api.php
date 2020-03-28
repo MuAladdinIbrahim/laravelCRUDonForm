@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/posts', 'API\PostController@index');
+Route::get('/posts', 'API\PostController@index')->middleware('auth:sanctum');
 Route::get('/posts/{post}', 'API\PostController@show')->middleware('auth:sanctum');
 Route::post('/posts','API\PostController@store')->middleware('auth:sanctum');
 
@@ -44,3 +44,4 @@ Route::post('/sanctum/token', function (Request $request) {
     return $user->createToken($request->device_name)->plainTextToken;
 });
 // rKXDcnHpRP3n81R3Nz9vKnl5Ie0JnYqtZZKDlwF0NDY4aB6gIuEm4Pu97p7k2DhBgJsBynzOgxCmxIId
+//uy58movgOJJJuCyLer49Qa2trw56Hsuq1VDSEYaC3W69H2RlmmjMTFJQETxuwN1LONpbqacJeSHZzV0i
